@@ -3,22 +3,22 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'sisma' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('sisma', ['ionic'])
-.controller('DemandasController', function($scope, $http) {
+var antigo = angular.module('sisma', ['ionic'])
+antigo.controller('DemandasController', function($scope, $http) {
 
 $http.get('http://10.21.0.137/20131011110380/api/demanda').
     then(function(response) {
         $scope.demandas = response.data;
     });
 })
-.controller('LocaisController', function($scope, $http){
+antigo.controller('LocaisController', function($scope, $http){
 
   $http.get('http://10.21.0.137/20131011110380/api/local').
     then(function(response) {
       $scope.locais = response.data;
     });
 })
-.controller('OcorrenciasController', function($scope, $http){
+antigo.controller('OcorrenciasController', function($scope, $http){
 
   function setDemanda(demandaId, id)
   {
@@ -67,7 +67,7 @@ $http.get('http://10.21.0.137/20131011110380/api/demanda').
   });
 })
 
-.run(function($ionicPlatform) {
+antigo.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -84,3 +84,94 @@ $http.get('http://10.21.0.137/20131011110380/api/demanda').
     }
   });
 })
+/*
+var camera = angular.module('sismaC', ['ionic', 'ngCordova'])
+camera.controller('CameraController', function($scope, $cordovaCamera) {
+
+  document.addEventListener("deviceready", function () {
+    //$scope.takePicture = function()
+    var options = {
+      quality: 50,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 200,
+      targetHeight: 200,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false,
+	  correctOrientation:true
+    };
+
+    $cordovaCamera.getPicture(options).then(function(imageData) {
+      var image = document.getElementById('myImage');
+      image.src = "data:image/jpeg;base64," + imageData;
+    }, function(err) {
+      // error
+    });
+
+  }, false);
+});
+camera.controller('GaleriaController', function($scope, $cordovaImagePicker) {
+
+  var options = {
+   maximumImagesCount: 1,
+   width: 200,
+   height: 200,
+   quality: 80
+  };
+
+  $cordovaImagePicker.getPictures(options)
+    .then(function (results) {
+      for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+      }
+    }, function(error) {
+      // error getting photos
+    });
+});
+*/
+var camera = angular.module('sismaC', ['ionic', 'ngCordova'])
+camera.controller('CameraController', function($scope, $cordovaCamera, $cordovaImagePicker) {
+
+    //document.addEventListener("deviceready", function ()
+    $scope.takePicture = function(){
+    var options1 = {
+      quality: 50,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 200,
+      targetHeight: 200,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false,
+	  correctOrientation:true
+    };
+
+    $cordovaCamera.getPicture(options1).then(function(imageData) {
+      var image = document.getElementById('myImage');
+      image.src = "data:image/jpeg;base64," + imageData;
+    }, function(err) {
+      // error
+    });
+
+  }
+  $scope.selectPicture = function(){
+  var options = {
+   maximumImagesCount: 5,
+   width: 200,
+   height: 200,
+   quality: 80
+  };
+
+  $cordovaImagePicker.getPictures(options)
+    .then(function (results) {
+      for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+      }
+    }, function(error) {
+      // error getting photos
+    });
+}
+});

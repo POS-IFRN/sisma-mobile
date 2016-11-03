@@ -18,7 +18,7 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    
+
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -28,28 +28,30 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+    <script src="js/ng-cordova.min.js"></script>
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="sisma">
+  <body ng-app="sismaC">
 
     <ion-pane style="background-color: #FA810A;">
       <ion-header-bar class="bar-stable">
         <h1 class="title">Cadastro de ocorrência</h1>
       </ion-header-bar>
-      <ion-content style="margin:20px;">
+      <ion-content ng-controller="CameraController" style="margin:20px;">
         <h3 style="text-align: center;">Descreva o problema:</h3>
         <textarea style="text-align:center; width:100%; height:20%;resize:none; font-size:18px;"></textarea>
         <h3 style="text-align: center; margin-top:10%;">Adicione uma imagem:</h3>
         <div style="text-align:center;">
-          <img lass="full-image" src="http://placehold.it/80x80">
+          <img lass="full-image" ng-show="image !== undefined" ng-src="{{image}}">
+          <img lass="full-image" ng-show="image == undefined" ng-src="http://placehold.it/200x200">
         </div>
-        <button class="button button-block button-dark">
+        <button class="button button-block button-dark" ng-click="takePicture()">
           Tirar foto
         </button>
-        <button class="button button-block button-dark">
+        <button class="button button-block button-dark" ng-click="selectPicture()">
           Selecionar da galeria
         </button>
         <div style="margin-top:20%;"class="button-bar">
