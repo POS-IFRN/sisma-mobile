@@ -3,17 +3,18 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'sisma' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+var url = 'http://10.21.0.137/20131011110380/api/';
 angular.module('sisma', ['ionic'])
 .controller('DemandasController', function($scope, $http) {
 
-$http.get('http://10.21.0.137/20131011110380/api/demanda').
+$http.get(url + 'demanda').
     then(function(response) {
         $scope.demandas = response.data;
     });
 })
 .controller('LocaisController', function($scope, $http){
 
-  $http.get('http://10.21.0.137/20131011110380/api/local').
+  $http.get(url + 'local').
     then(function(response) {
       $scope.locais = response.data;
     });
@@ -22,7 +23,7 @@ $http.get('http://10.21.0.137/20131011110380/api/demanda').
 
   function setDemanda(demandaId, id)
   {
-        $http.get('http://10.21.0.137/20131011110380/api/demanda').
+        $http.get(url + 'demanda').
             then(function(responsedemanda) {
                 $scope.demandas = responsedemanda.data;
                 var demanda = $.grep($scope.demandas, function(e){ return e.id == demandaId; });
@@ -34,7 +35,7 @@ $http.get('http://10.21.0.137/20131011110380/api/demanda').
 
   function setLocal(localId, id)
   {
-    $http.get('http://10.21.0.137/20131011110380/api/local').
+    $http.get(url + 'local').
         then(function(responselocal) {
             $scope.locais = responselocal.data;
             var local = $.grep($scope.locais, function(e){ return e.id == localId; });
@@ -45,7 +46,7 @@ $http.get('http://10.21.0.137/20131011110380/api/demanda').
   }
 
 
-  $http.get('http://10.21.0.137/20131011110380/api/ocorrencia').
+  $http.get(url + 'ocorrencia').
   then(function(response) {
     $scope.ocorrencias = response.data;
     console.log("oi ayrton");
